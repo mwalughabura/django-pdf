@@ -6,4 +6,6 @@ I hope this works
 """
 urlpatterns = [
     path('', views.index, name='index'),
+
+    path('certificate', views.certificate),
 ]
