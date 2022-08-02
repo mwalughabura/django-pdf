@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from fpdf import FPDF
-
+from django.http import FileResponse
 
 # Create your views here.
 def index(request):
@@ -9,15 +9,11 @@ def index(request):
 
 # Generate certificate
 def certificate(request):
-    sales = [
-        {"item": "Keyboard", "amount": "$120,00"},
-        {"item": "Mouse", "amount": "$10,00"},
-        {"item": "House", "amount": "$1 000 000,00"},
-    ]
-    pdf = FPDF('P', 'mm', 'A4')
+    pdf = FPDF('L', 'mm', 'A4')
+    pdf.set_title('Certificate Of Completion')
     pdf.add_page()
     pdf.set_font('courier', 'B', 16)
-    pdf.cell(40, 10, 'This is what you have sold this month so far:',0,1)
+    pdf.cell(40, 10, 'Certificate Of Completion',0,1)
     pdf.cell(40, 10, '',0,1)
     pdf.set_font('courier', '', 12)
     pdf.cell(200, 8, f"{'Item'.ljust(30)} {'Amount'.rjust(20)}", 0, 1)
@@ -26,5 +22,5 @@ def certificate(request):
     for line in sales:
         pdf.cell(200, 8, f"{line['item'].ljust(30)} {line['amount'].rjust(20)}", 0, 1)
 
-    pdf.output('tuto1.pdf', 'F')
-    return render(request, "index.html")
+    pdf.output('cert.pdf', 'F')
+    return FileResponse(open('cert.pdf', 'rb'), as_attachment=True, content_type='application/pdf')
