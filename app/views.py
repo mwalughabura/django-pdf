@@ -19,8 +19,8 @@ def certificate(request):
     pdf.cell(200, 8, f"{'Item'.ljust(30)} {'Amount'.rjust(20)}", 0, 1)
     pdf.line(10, 30, 150, 30)
     pdf.line(10, 38, 150, 38)
-    for line in sales:
-        pdf.cell(200, 8, f"{line['item'].ljust(30)} {line['amount'].rjust(20)}", 0, 1)
+    # for line in sales:
+    #     pdf.cell(200, 8, f"{line['item'].ljust(30)} {line['amount'].rjust(20)}", 0, 1)
 
     pdf.output('cert.pdf', 'F')
     return FileResponse(open('cert.pdf', 'rb'), as_attachment=True, content_type='application/pdf')
